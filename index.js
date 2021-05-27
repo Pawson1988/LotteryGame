@@ -61,46 +61,60 @@ const PrintRandArr = (arr, numOfItems) => {
 
 
 const argsNums = process.argv.slice(2); // to get the numbers from the command line
+let isOutOfRange = false;
 
 if(argsNums.length > 6 || argsNums.length < 6){  // check the number of numbers entered is 6
+
     console.log("you need to input 6 numbers exactly");
+
 } else {
+    
+    argsNums.forEach(item => {
+        if (item > maxNumber || item < 1){
+            console.log("Your numbers must be between 1 and " + maxNumber);
+            isOutOfRange = true;
+        }}) 
+     
+    if(!isOutOfRange){    
+        
+        var lotto = []; // declare an empty array to add the numbers to
+        const setsOfNums = 50; // to set how many random lottery sets are to be generated
 
-var lotto = []; // declare an empty array to add the numbers to
-const setsOfNums = 5000; // to set how many random lottery sets are to be generated
+
+        for(let i = 0; i < setsOfNums; i++){ // to create the given number of lottery sets declare above
+            lotto.push(PrintRandArr(LottoNumbers, 6));
+        }
+
+        let randomSet = (Math.floor(Math.random() * setsOfNums)); // to get a random number within the lottery sets created 
+
+        const finalLottoNums = lotto[randomSet]; //save the random lottery set
+
+        console.log(`This is your lucky set, chosen at random from a collection of ${setsOfNums} lottery sets: + ${finalLottoNums}`); // show the user how many sets were generated at first and the chosen array of lottery numbers
 
 
-for(let i = 0; i < setsOfNums; i++){ // to create the given number of lottery sets declare above
-    lotto.push(PrintRandArr(LottoNumbers, 6));
-}
+        console.log("---------------------------------------------")
 
-let randomSet = (Math.floor(Math.random() * setsOfNums)); // to get a random number within the lottery sets created 
-const finalLottoNums = lotto[randomSet]; //save the random lottery set
-console.log(`This is your lucky set, chosen at random from a collection of ${setsOfNums} lottery sets: + ${finalLottoNums}`); // show the user how many sets were generated at first and the chosen array of lottery numbers
+        let argsNums1 = parseNums(argsNums); // to use the function to parse the arguments into integers so they can be checked by underscore
 
-console.log("---------------------------------------------")
+        // use this line to use a set array and change the second arguement in difference
+        // const chosenLottoNums = [16, 24, 32, 8, 18, 5]; 
 
-let argsNums1 = parseNums(argsNums); // to use the function to parse the arguments into integers so they can be checked by underscore
+        const checkedNums = _.difference(finalLottoNums, argsNums1); // check the numbers
 
-// use this line to use a set array and change the second arguement in difference
-// const chosenLottoNums = [16, 24, 32, 8, 18, 5]; 
+        console.log(`Your chosen numbers are:`); // show the chosen numbers from the command line when giving the result...
+        console.log(argsNums1);
 
-const checkedNums = _.difference(finalLottoNums, argsNums1); // check the numbers
+        const finalCount = 6 - checkedNums.length; // .difference takes any numbers that are different out of the array so we cando a quick substraction to get how many numbers were matched
 
-console.log(`Your chosen numbers are:`); // show the chosen numbers from the command line when giving the result...
-console.log(argsNums1);
-
-const finalCount = 6 - checkedNums.length; // .difference takes any numbers that are different out of the array so we cando a quick substraction to get how many numbers were matched
-
-if (finalCount === 0){  // A conditional statement to show the user the correct number of numbers matched
-    console.log("You failed miserably")
-} else {
-    if (finalCount === 1){
-        console.log(`You got ${finalCount} number`);
-    } else {
-        console.log(`You got ${finalCount} numbers`);
-    }
-}}
+        if (finalCount === 0){  // A conditional statement to show the user the correct number of numbers matched
+            console.log("You failed miserably")
+        } else {
+            if (finalCount === 1){
+                console.log(`You got ${finalCount} number`);
+            } else {
+                console.log(`You got ${finalCount} numbers`);
+            }
+}}}
 
 
 function parseNums(args){ // function to parse the args into integers
