@@ -100,7 +100,7 @@ if (finalCount === 0){  // A conditional statement to show the user the correct 
     } else {
         console.log(`You got ${finalCount} numbers`);
     }
-};
+}}
 
 
 function parseNums(args){ // function to parse the args into integers
@@ -109,6 +109,5 @@ function parseNums(args){ // function to parse the args into integers
         parsedNums.push(parseInt(args[i]));
     }
     return parsedNums;
-}}
-
+}
 
