@@ -60,33 +60,37 @@ const PrintRandArr = (arr, numOfItems) => {
 // console.log(PrintRandArr(LottoNumbers, 6));
 
 
-var lotto = [];
-const setsOfNums = 20;
+
+var lotto = []; // declare an empty array to add the numbers to
+const setsOfNums = 50000; // to set how many random lottery sets are to be generated
 
 
-for(let i = 0; i < setsOfNums; i++){
+for(let i = 0; i < setsOfNums; i++){ // to create the given number of lottery sets declare above
     lotto.push(PrintRandArr(LottoNumbers, 6));
 }
 
-// for(let i = 0; i < lotto.length; i++){
-//     console.log(lotto[i]);
-// }
-
-let randomSet = (Math.floor(Math.random() * setsOfNums));
-const finalLottoNums = lotto[randomSet];
-console.log(finalLottoNums);
-console.log("This is your lucky set, chosen at random: " + finalLottoNums);
+let randomSet = (Math.floor(Math.random() * setsOfNums)); // to get a random number within the lottery sets created 
+const finalLottoNums = lotto[randomSet]; //save the random lottery set
+console.log(`This is your lucky set, chosen at random from a collection of ${setsOfNums} lottery sets: + ${finalLottoNums}`); // show the user how many sets were generated at first and the chosen array of lottery numbers
 
 
-const chosenLottoNums = [16, 24, 32, 8, 18, 5];
-const checkedNums = _.difference(finalLottoNums, chosenLottoNums);
+const argsNums = process.argv.slice(2); // to get the numbers from the command line
 
-console.log(finalLottoNums);
-console.log(chosenLottoNums);
+console.log("---------------------------------------------")
 
-const finalCount = 6 - checkedNums.length;
+let argsNums1 = parseNums(argsNums); // to use the function to parse the arguments into integers so they can be checked by underscore
 
-if (finalCount === 0){
+// use this line to use a set array and change the second arguement in difference
+// const chosenLottoNums = [16, 24, 32, 8, 18, 5]; 
+
+const checkedNums = _.difference(finalLottoNums, argsNums1); // check the numbers
+
+console.log(`Your chosen numbers are:`); // show the chosen numbers from the command line when giving the result...
+console.log(argsNums1);
+
+const finalCount = 6 - checkedNums.length; // .difference takes any numbers that are different out of the array so we cando a quick substraction to get how many numbers were matched
+
+if (finalCount === 0){  // A conditional statement to show the user the correct number of numbers matched
     console.log("You failed miserably")
 } else {
     if (finalCount === 1){
@@ -96,10 +100,12 @@ if (finalCount === 0){
     }
 };
 
-// get both arrays of number
-// use a loop to iterate one of the arrays
-// check each number against the other array using index of.... 
-// if found counter plus 1 if '-1' no count.... 
-// print out the count and a message
 
+function parseNums(args){ // function to parse the args into integers
+    const parsedNums = [];
+    for(let i = 0; i < args.length; i++){
+        parsedNums.push(parseInt(args[i]));
+    }
+    return parsedNums;
+}
 
