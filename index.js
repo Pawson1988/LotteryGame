@@ -60,9 +60,14 @@ const PrintRandArr = (arr, numOfItems) => {
 // console.log(PrintRandArr(LottoNumbers, 6));
 
 
+const argsNums = process.argv.slice(2); // to get the numbers from the command line
+
+if(argsNums.length > 6 || argsNums.length < 6){  // check the number of numbers entered is 6
+    console.log("you need to input 6 numbers exactly");
+} else {
 
 var lotto = []; // declare an empty array to add the numbers to
-const setsOfNums = 50000; // to set how many random lottery sets are to be generated
+const setsOfNums = 5000; // to set how many random lottery sets are to be generated
 
 
 for(let i = 0; i < setsOfNums; i++){ // to create the given number of lottery sets declare above
@@ -72,9 +77,6 @@ for(let i = 0; i < setsOfNums; i++){ // to create the given number of lottery se
 let randomSet = (Math.floor(Math.random() * setsOfNums)); // to get a random number within the lottery sets created 
 const finalLottoNums = lotto[randomSet]; //save the random lottery set
 console.log(`This is your lucky set, chosen at random from a collection of ${setsOfNums} lottery sets: + ${finalLottoNums}`); // show the user how many sets were generated at first and the chosen array of lottery numbers
-
-
-const argsNums = process.argv.slice(2); // to get the numbers from the command line
 
 console.log("---------------------------------------------")
 
@@ -107,5 +109,6 @@ function parseNums(args){ // function to parse the args into integers
         parsedNums.push(parseInt(args[i]));
     }
     return parsedNums;
-}
+}}
+
 
