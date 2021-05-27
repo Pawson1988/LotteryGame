@@ -61,9 +61,12 @@ const PrintRandArr = (arr, numOfItems) => {
 
 
 const argsNums = process.argv.slice(2); // to get the numbers from the command line
-let isOutOfRange = false;
+let argsNums1 = parseNums(argsNums); // to use the function to parse the arguments into integers so they can be checked by underscore
 
-if(argsNums.length > 6 || argsNums.length < 6){  // check the number of numbers entered is 6
+let isOutOfRange = false;
+let notANumber = false;
+
+if(argsNums.length !== 6){  // check the number of numbers entered is 6
 
     console.log("you need to input 6 numbers exactly");
 
@@ -73,11 +76,16 @@ if(argsNums.length > 6 || argsNums.length < 6){  // check the number of numbers 
         if (item > maxNumber || item < 1){
             console.log("Your numbers must be between 1 and " + maxNumber);
             isOutOfRange = true;
-        }}) 
+        }
+        if(isNaN(item) === true){
+            console.log("Your input must be a number")
+            notANumber = true;
+        }
+    }) 
      
-    if(!isOutOfRange){    
+    if(!isOutOfRange && !notANumber){    
         
-        var lotto = []; // declare an empty array to add the numbers to
+        let lotto = []; // declare an empty array to add the numbers to
         const setsOfNums = 50; // to set how many random lottery sets are to be generated
 
 
@@ -93,11 +101,6 @@ if(argsNums.length > 6 || argsNums.length < 6){  // check the number of numbers 
 
 
         console.log("---------------------------------------------")
-
-        let argsNums1 = parseNums(argsNums); // to use the function to parse the arguments into integers so they can be checked by underscore
-
-        // use this line to use a set array and change the second arguement in difference
-        // const chosenLottoNums = [16, 24, 32, 8, 18, 5]; 
 
         const checkedNums = _.difference(finalLottoNums, argsNums1); // check the numbers
 
